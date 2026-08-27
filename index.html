@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KAIZEN HACKS — SPRINT // 2026</title>
+  <meta name="description" content="KAIZEN HACKS // Elite Ideathon & Engineering Sprint. An ideathon where ideas for the UN Sustainable Development Goals become real apps, websites, and games.">
+  
+  <!-- Fonts: Plus Jakarta Sans + JetBrains Mono + Syne -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="loading">
+  <!-- Ultra-thin Scroll Progress Bar -->
+  <div id="scroll-progress" class="scroll-progress-bar" aria-hidden="true"></div>
+
+  <!-- Margin Coordinates (HUD Telemetry from Reference) -->
+  <div class="margin-coord margin-coord-left" aria-hidden="true">
+    <span>LAT: 28.6139° N / LONG: 77.2090° E</span>
+  </div>
+  <div class="margin-coord margin-coord-right" aria-hidden="true">
+    <span>SECTOR.07 // 28.5270° N - 77.2590° E</span>
+  </div>
+
+  <!-- Ambient Blueprint Grid & Matrix Canvas -->
+  <div class="bg-system" aria-hidden="true">
+    <div class="bg-layer bg-noise"></div>
+    <div class="bg-layer bg-radial-glow"></div>
+    <div class="bg-layer bg-grid" id="bg-grid"></div>
+    <canvas id="matrix-canvas" class="bg-layer matrix-canvas"></canvas>
+    <div class="bg-layer bg-ambient-orb orb-1" id="orb-1"></div>
+    <div class="bg-layer bg-ambient-orb orb-2" id="orb-2"></div>
+  </div>
+
+  <!-- Initial System Boot Loader -->
+  <div id="page-loader" class="page-loader" aria-label="Loading Kaizen Hacks">
+    <div class="loader-content">
+      <div class="loader-brand">
+        <span class="loader-symbol">改善</span>
+        <span class="loader-title">KAIZEN // HACKS</span>
+      </div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar-fill" id="loader-bar"></div>
+      </div>
+      <div class="loader-status" id="loader-status">SYS_OK // NODE_DELHI INITIALIZING...</div>
+    </div>
+  </div>
+
+  <!-- Global Header Navigation -->
+  <header id="main-nav" class="nav-container">
+    <div class="nav-inner">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" class="nav-brand" aria-label="Kaizen Hacks Home">
+        <div class="brand-glyph-box">
+          <span class="brand-glyph-kanji">改善</span>
+          <span class="brand-glyph-dot">■</span>
+        </div>
+        <div class="brand-text-wrap">
+          <span class="brand-title">KAIZEN HACKS</span>
+          <span class="brand-sprint-badge">SPRINT // 2026</span>
+        </div>
+      </a>
+
+      <!-- Center Telemetry Tag (from reference) -->
+      <div class="nav-center-telemetry">
+        <span class="telemetry-node">■ SYS_OK // NODE_DELHI</span>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="#events" class="nav-link">EVENTS</a></li>
+          <li class="nav-item"><a href="#sponsors" class="nav-link">PARTNERS</a></li>
+          <li class="nav-item"><a href="#team" class="nav-link">TEAM</a></li>
+          <li class="nav-item"><a href="#archive" class="nav-link">ARCHIVE</a></li>
+        </ul>
+      </nav>
+
+      <!-- Nav Actions (Theme Toggle + Audio Toggle + Register Button) -->
+      <div class="nav-actions">
+        <button class="icon-tool-btn" id="theme-toggle-btn" aria-label="Toggle theme mode" title="Toggle Light/Dark Theme">
+          <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <button class="icon-tool-btn" id="audio-toggle-btn" aria-label="Toggle audio effects" title="Toggle Sound FX">
+          <svg class="audio-icon-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg class="audio-icon-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <button class="btn btn-register-nav" id="nav-apply-btn">
+          <span>REGISTER →</span>
+        </button>
+
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Active Green Hairline Divider -->
+    <div class="nav-green-hairline"></div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+    <div class="mobile-drawer-inner">
+      <div class="mobile-drawer-header">
+        <span class="drawer-label">// SYS_NAV PROTOCOL</span>
+        <button class="drawer-close" id="drawer-close" aria-label="Close menu">&times;</button>
+      </div>
+      <ul class="mobile-nav-list">
+        <li><a href="#hero" class="mobile-nav-link"><span class="mobile-num">01</span>HOME <span class="mobile-arrow">→</span></a></li>
+        <li><a href="#events" class="mobile-nav-link"><span class="mobile-num">02</span>EVENTS <span class="mobile-arrow">→</span></a></li>
+        <li><a href="#timeline" class="mobile-nav-link"><span class="mobile-num">03</span>TIMELINE <span class="mobile-arrow">→</span></a></li>
+        <li><a href="#team" class="mobile-nav-link"><span class="mobile-num">04</span>TEAM <span class="mobile-arrow">→</span></a></li>
+        <li><a href="#sponsors" class="mobile-nav-link"><span class="mobile-num">05</span>PARTNERS <span class="mobile-arrow">→</span></a></li>
+        <li><a href="#archive" class="mobile-nav-link"><span class="mobile-num">06</span>ARCHIVE & FAQ <span class="mobile-arrow">→</span></a></li>
+      </ul>
+      <div class="mobile-drawer-footer">
+        <div class="mobile-theme-row">
+          <span class="mobile-theme-label">THEME MODE:</span>
+          <button class="theme-toggle-btn mobile-theme-btn" id="mobile-theme-toggle" aria-label="Toggle theme mode">
+            <span class="theme-mode-text">LIGHT / DARK</span>
+          </button>
+        </div>
+        <button class="btn btn-register-block" id="mobile-apply-btn">
+          <span>CLAIM YOUR SPOT →</span>
+        </button>
+        <div class="mobile-coords">LAT: 28.5270° N // LONG: 77.2590° E</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main id="main-content">
+
+    <!-- ============================================================
+         1. HERO SECTION (PRECISION DUAL-COLUMN REPLICATING SCREENSHOTS)
+         ============================================================ -->
+    <section id="hero" class="hero-split-section">
+      <div class="container hero-container">
+        
+        <!-- Top Telemetry Status Strip -->
+        <div class="hero-telemetry-header">
+          <div class="hero-telemetry-left">
+            <span class="status-live-dot">●</span>
+            <span class="telemetry-text">KAIZEN HACKS // SPRINT LABS &nbsp;|&nbsp; LAT: 28.5270° N / LONG: 77.2590° E</span>
+          </div>
+          <div class="hero-telemetry-right">
+            <span class="telemetry-item">SYS.STATUS // ONLINE</span>
+            <span class="telemetry-sep"></span>
+            <span class="telemetry-item">PROTOCOL: V2.6_STABLE</span>
+            <span class="telemetry-badge">● IDEATHON EDITION</span>
+          </div>
+        </div>
+
+        <!-- Central Split Layout (Left Editorial + Right Centerpiece HUD Card) -->
+        <div class="hero-split-grid">
+          
+          <!-- LEFT COLUMN: Massive Impact Kinetic Typography -->
+          <div class="hero-left-column">
+            
+            <div class="hero-category-tag">
+              IDEATHONS / EVENTS / CONTINUOUS SHIP CULTURE
+            </div>
+
+            <!-- Massive 3-line Headline matching Screenshot 2 -->
+            <div class="hero-headline-group">
+              <div class="hero-headline-row line-think">
+                <span class="word-think">THINK.</span>
+              </div>
+              <div class="hero-headline-row line-build">
+                <span class="word-build">BUILD.</span>
+              </div>
+              <div class="hero-headline-row line-impact">
+                <span class="word-impact">IMPACT.</span>
+              </div>
+            </div>
+
+            <!-- Description Paragraph -->
+            <p class="hero-description-paragraph">
+              No endless keynote talks. No vanity pitches. An ideathon where ideas for the UN Sustainable Development Goals become real apps, websites, and games tackling everyday problems.
+            </p>
+
+            <!-- Background Watermark Numeral '01' -->
+            <div class="hero-watermark-num" aria-hidden="true">01</div>
+
+            <!-- Bottom 3 Metric Blocks (from Reference) -->
+            <div class="hero-bottom-metrics">
+              <div class="metric-block">
+                <div class="metric-bullet-label">
+                  <span class="metric-dot">●</span>
+                  <span class="metric-label">SCALE</span>
+                </div>
+                <div class="metric-value">DEBUT EDITION</div>
+              </div>
+
+              <div class="metric-block">
+                <div class="metric-bullet-label">
+                  <span class="metric-dot">●</span>
+                  <span class="metric-label">COMMUNITY</span>
+                </div>
+                <div class="metric-value">FOUNDING 50</div>
+              </div>
+
+              <div class="metric-block">
+                <div class="metric-bullet-label">
+                  <span class="metric-dot">●</span>
+                  <span class="metric-label">GRANTS POOL</span>
+                </div>
+                <div class="metric-value metric-emerald">UNLOCKING SOON</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN: Tactical Featured Event HUD Card (from Screenshot 1 & 2) -->
+          <div class="hero-right-column">
+            
+            <div class="hud-centerpiece-card" id="greentech-card">
+              
+              <!-- Corner Brackets for Tactical Blueprint Framing -->
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-tr"></div>
+              <div class="hud-corner hud-corner-bl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+
+              <!-- Top Badges Row -->
+              <div class="hud-card-top-bar">
+                <div class="hud-badges-left">
+                  <span class="hud-pill hud-pill-open">NEXT EVENT / OPEN</span>
+                  <span class="hud-pill-tag">VOL. 01</span>
+                  <span class="hud-pill-tag">📅 COMING SOON</span>
+                  <span class="hud-pill-tag hud-pill-loc">📍 NEW DELHI ↗</span>
+                </div>
+                <div class="hud-badges-right">
+                  <span class="hud-status-badge">● REGISTRATIONS OPEN</span>
+                </div>
+              </div>
+
+              <!-- Category Subtitle -->
+              <div class="hud-category-subtitle">
+                IDEATHON CODEX // BUILD FOR THE GOALS
+              </div>
+
+              <!-- Massive Event Title -->
+              <h2 class="hud-event-title">
+                GREENTECH
+              </h2>
+
+              <!-- Structured Specs Data Table -->
+              <div class="hud-specs-table">
+                <div class="spec-table-row">
+                  <span class="spec-label">LOCATION</span>
+                  <span class="spec-value venue-link" id="venue-click-target">
+                    CM SHRI/DBRA SOSE KALKAJI <span class="arrow-diag">↗</span>
+                  </span>
+                </div>
+
+                <div class="spec-table-row">
+                  <span class="spec-label">DURATION</span>
+                  <span class="spec-value">ONE DAY IDEATHON</span>
+                </div>
+
+                <div class="spec-table-row">
+                  <span class="spec-label">CAPACITY</span>
+                  <span class="spec-value">50 BUILDERS</span>
+                </div>
+
+                <div class="spec-table-row">
+                  <span class="spec-label">PRIZE POOL</span>
+                  <span class="spec-value spec-val-emerald">TO BE REVEALED</span>
+                </div>
+              </div>
+
+              <!-- Interactive Tabs inside Card: Overview / Tracks / Timeline -->
+              <div class="hud-tab-nav">
+                <button class="hud-tab-btn active" data-tab="overview">OVERVIEW</button>
+                <button class="hud-tab-btn" data-tab="tracks">TRACKS</button>
+                <button class="hud-tab-btn" data-tab="timeline">TIMELINE</button>
+              </div>
+
+              <!-- Dynamic Tab Content Panes -->
+              <div class="hud-tab-panes">
+                <!-- Overview Pane -->
+                <div class="hud-tab-pane active" id="tab-overview">
+                  <p class="hud-tab-desc">
+                    Pick an idea that advances an SDG, then bring it to life as an app, website, or game that tackles real-life problems. Mentor support throughout — no idea is too early.
+                  </p>
+                </div>
+
+                <!-- Tracks Pane -->
+                <div class="hud-tab-pane" id="tab-tracks">
+                  <div class="hud-tracks-mini">
+                    <div class="mini-track-item">
+                      <span class="track-code">SDG 07 //</span>
+                      <span class="track-title">Clean Energy & Micro-Grids</span>
+                    </div>
+                    <div class="mini-track-item">
+                      <span class="track-code">SDG 11 //</span>
+                      <span class="track-title">Smart Cities & Urban Transit</span>
+                    </div>
+                    <div class="mini-track-item">
+                      <span class="track-code">SDG 12 //</span>
+                      <span class="track-title">Circular Waste & Material Tracking</span>
+                    </div>
+                    <div class="mini-track-item">
+                      <span class="track-code">SDG 13 //</span>
+                      <span class="track-title">Climate Action & Carbon Modeling</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Timeline Pane -->
+                <div class="hud-tab-pane" id="tab-timeline">
+                  <div class="hud-timeline-mini">
+                    <div class="mini-time-row"><span class="m-time">08:30</span> Check-in & Hardware Unboxing</div>
+                    <div class="mini-time-row"><span class="m-time">10:00</span> Hacking Commences: The First Commit</div>
+                    <div class="mini-time-row"><span class="m-time">15:30</span> Code Freeze & Crucible Demos</div>
+                    <div class="mini-time-row"><span class="m-time">17:30</span> Awards & Founder Grants</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Card Action Button (Full-width Vibrant Emerald) -->
+              <button class="btn btn-claim-spot" id="hero-card-claim-btn">
+                <span>CLAIM YOUR SPOT →</span>
+              </button>
+
+              <!-- Secondary Brief Trigger -->
+              <div class="hud-card-brief-link">
+                <a href="#events" class="brief-anchor">VIEW EVENT BRIEF ↓</a>
+              </div>
+
+              <!-- Rolling Basis Notice -->
+              <div class="hud-card-notice">
+                <span class="check-icon">✓</span>
+                <span class="notice-txt">CONFIRMATIONS SENT ON ROLLING BASIS</span>
+              </div>
+
+              <!-- Card Bottom Telemetry Footer -->
+              <div class="hud-card-footer">
+                <span class="node-id">NODE: DELHI_KALKAJI</span>
+                <span class="sync-status">= SYNC_OK</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Marquee Ribbon / Ticker (from Screenshot 2 Bottom) -->
+      <div class="marquee-ticker-wrap">
+        <div class="marquee-track">
+          <div class="marquee-content">
+            <span class="m-item">GREENTECH IDEATHON <span class="m-arrow">→</span></span>
+            <span class="m-item">BUILD FOR THE SDGS <span class="m-arrow">→</span></span>
+            <span class="m-item">APPS · WEBSITES · GAMES <span class="m-arrow">→</span></span>
+            <span class="m-item">REAL PROBLEMS, REAL SOLUTIONS <span class="m-arrow">→</span></span>
+            <span class="m-item">50 BUILDER SEATS <span class="m-arrow">→</span></span>
+            <span class="m-item">CM SHRI / DBRA SOSE KALKAJI <span class="m-arrow">→</span></span>
+            <span class="m-item">IDEAS TO WORKING BUILDS <span class="m-arrow">→</span></span>
+            <span class="m-item">ZERO FLUFF, PURE CRAFT <span class="m-arrow">→</span></span>
+          </div>
+          <div class="marquee-content" aria-hidden="true">
+            <span class="m-item">GREENTECH IDEATHON <span class="m-arrow">→</span></span>
+            <span class="m-item">BUILD FOR THE SDGS <span class="m-arrow">→</span></span>
+            <span class="m-item">APPS · WEBSITES · GAMES <span class="m-arrow">→</span></span>
+            <span class="m-item">REAL PROBLEMS, REAL SOLUTIONS <span class="m-arrow">→</span></span>
+            <span class="m-item">50 BUILDER SEATS <span class="m-arrow">→</span></span>
+            <span class="m-item">CM SHRI / DBRA SOSE KALKAJI <span class="m-arrow">→</span></span>
+            <span class="m-item">IDEAS TO WORKING BUILDS <span class="m-arrow">→</span></span>
+            <span class="m-item">ZERO FLUFF, PURE CRAFT <span class="m-arrow">→</span></span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Technical Divider -->
+    <div class="tech-divider-wrap">
+      <div class="tech-divider" data-divider="true"></div>
+    </div>
+
+    <!-- ============================================================
+         2. EVENTS / INITIATIVES SHOWCASE
+         ============================================================ -->
+    <section id="events" class="events-section section-padding">
+      <div class="container">
+        
+        <div class="section-meta-row" data-reveal="fade-up">
+          <span class="section-tag">// 01 UPCOMING SPRINTS</span>
+          <span class="section-coord">REF: EVENT_MANIFEST_2026</span>
+        </div>
+
+        <div class="section-header-compact" data-reveal="mask">
+          <h2 class="section-title">THE FLAGSHIP SPRINTS</h2>
+          <p class="section-subtitle">High-concurrency hackathons and focused ideathons designed for relentless execution velocity.</p>
+        </div>
+
+        <div class="events-grid">
+          
+          <!-- Event 1: GREENTECH IDEATHON (Current) -->
+          <div class="event-showcase-card active-card" data-reveal="slide-left">
+            <div class="card-status-strip">
+              <span class="badge-active">● ACTIVE REGISTRATIONS</span>
+              <span class="badge-id">SPRINT-DELHI-01</span>
+            </div>
+
+            <div class="event-card-body">
+              <span class="event-card-vol">VOL. 01 // SPRINT LABS</span>
+              <h3 class="event-card-title">GREENTECH IDEATHON</h3>
+              <p class="event-card-desc">
+                An intensive one-day ideathon tackling United Nations Sustainable Development Goals through software, physical computing, and real-time data visualizers.
+              </p>
+
+              <div class="event-meta-grid">
+                <div class="meta-cell">
+                  <span class="meta-k">LOCATION</span>
+                  <span class="meta-v">DBRA SOSE Kalkaji, New Delhi</span>
+                </div>
+                <div class="meta-cell">
+                  <span class="meta-k">SEATS</span>
+                  <span class="meta-v">50 Builders Only</span>
+                </div>
+                <div class="meta-cell">
+                  <span class="meta-k">DURATION</span>
+                  <span class="meta-v">1 Day Intense Sprint</span>
+                </div>
+                <div class="meta-cell">
+                  <span class="meta-k">GRANTS</span>
+                  <span class="meta-v text-emerald">To Be Announced</span>
+                </div>
+              </div>
+
+              <div class="event-tracks-pills">
+                <span class="track-tag">SDG 07: Clean Energy</span>
+                <span class="track-tag">SDG 11: Sustainable Cities</span>
+                <span class="track-tag">SDG 12: Circular Economy</span>
+                <span class="track-tag">SDG 13: Climate Action</span>
+              </div>
+            </div>
+
+            <div class="event-card-action">
+              <button class="btn btn-primary btn-block apply-trigger-btn" data-event="GREENTECH IDEATHON">
+                <span>APPLY FOR GREENTECH →</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Event 2: KAIZEN EVENTS BENGALURU (Upcoming) -->
+          <div class="event-showcase-card" data-reveal="slide-right">
+            <div class="card-status-strip">
+              <span class="badge-upcoming">COMING Q4 2026</span>
+              <span class="badge-id">SPRINT-BLR-02</span>
+            </div>
+
+            <div class="event-card-body">
+              <span class="event-card-vol">VOL. 02 // HARDWARE & KERNELS</span>
+              <h3 class="event-card-title">KAIZEN BENGALURU</h3>
+              <p class="event-card-desc">
+                48-hour continuous systems assembly for elite kernel engineers, autonomous agent researchers, and high-throughput distributed architects.
+              </p>
+
+              <div class="event-meta-grid">
+                <div class="meta-cell">
+                  <span class="meta-k">LOCATION</span>
+                  <span class="meta-v">Bangalore Tech Park, BLR</span>
+                </div>
+                <div class="meta-cell">
+                  <span class="meta-k">SEATS</span>
+                  <span class="meta-v">100 Invited Fellows</span>
+                </div>
+                <div class="meta-cell">
+                  <span class="meta-k">DURATION</span>
+                  <span class="meta-v">48 Hours Non-Stop</span>
+                </div>
+                <div class="meta-cell">
+                  <span class="meta-k">COMPUTE</span>
+                  <span class="meta-v text-emerald">8x H100 SXM5 / Team</span>
+                </div>
+              </div>
+
+              <div class="event-tracks-pills">
+                <span class="track-tag">Distributed Memory</span>
+                <span class="track-tag">Neuro-Symbolic AI</span>
+                <span class="track-tag">ZK Cryptography</span>
+                <span class="track-tag">Embedded Silicon</span>
+              </div>
+            </div>
+
+            <div class="event-card-action">
+              <button class="btn btn-secondary btn-block apply-trigger-btn" data-event="KAIZEN BENGALURU">
+                <span>JOIN WAITLIST →</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Technical Divider -->
+    <div class="tech-divider-wrap">
+      <div class="tech-divider" data-divider="true"></div>
+    </div>
+
+    <!-- ============================================================
+         3. TIMELINE & SPRINT CHRONOLOGY
+         ============================================================ -->
+    <section id="timeline" class="timeline-section section-padding">
+      <div class="container">
+        
+        <div class="section-meta-row" data-reveal="fade-up">
+          <span class="section-tag">// 02 SPRINT CHRONOLOGY</span>
+          <span class="section-coord">T-MINUS EXECUTION SCHEDULE</span>
+        </div>
+
+        <div class="section-header-compact" data-reveal="mask">
+          <h2 class="section-title">THE SPRINT TIMELINE</h2>
+          <p class="section-subtitle">Choreographed down to the minute to maximize deep work and minimize friction.</p>
+        </div>
+
+        <div class="timeline-track-wrap">
+          <div class="timeline-line-bg">
+            <div class="timeline-line-progress" id="timeline-progress"></div>
+          </div>
+
+          <div class="timeline-nodes">
+            
+            <div class="timeline-node" data-reveal="slide-left">
+              <div class="node-marker">
+                <span class="node-dot"></span>
+                <span class="node-time">08:30 IST</span>
+              </div>
+              <div class="node-content">
+                <span class="node-phase">PHASE 01</span>
+                <h4 class="node-title">Builder Check-in & Hardware Lockers</h4>
+                <p class="node-desc">Physical access badge activation, private subnet ingress keys distributed, hardware devkits unboxed. Welcome briefing by event leads.</p>
+              </div>
+            </div>
+
+            <div class="timeline-node" data-reveal="slide-right">
+              <div class="node-marker">
+                <span class="node-dot"></span>
+                <span class="node-time">10:00 IST</span>
+              </div>
+              <div class="node-content">
+                <span class="node-phase">PHASE 02</span>
+                <h4 class="node-title">Hacking Commences: First Commit</h4>
+                <p class="node-desc">Repositories linked to real-time build telemetry board. Dedicated mentor desks active for architecture critique and rapid debugging.</p>
+              </div>
+            </div>
+
+            <div class="timeline-node" data-reveal="slide-left">
+              <div class="node-marker">
+                <span class="node-dot"></span>
+                <span class="node-time">13:30 IST</span>
+              </div>
+              <div class="node-content">
+                <span class="node-phase">PHASE 03</span>
+                <h4 class="node-title">Midday Architecture Checkpoint</h4>
+                <p class="node-desc">1-on-1 code reviews with staff engineers from leading labs. Stress-testing prototype stability and SDG problem validation.</p>
+              </div>
+            </div>
+
+            <div class="timeline-node" data-reveal="slide-right">
+              <div class="node-marker">
+                <span class="node-dot"></span>
+                <span class="node-time">16:00 IST</span>
+              </div>
+              <div class="node-content">
+                <span class="node-phase">PHASE 04</span>
+                <h4 class="node-title">Code Freeze & The Crucible Demos</h4>
+                <p class="node-desc">All repositories locked. 3-minute live terminal demonstrations and working device tests in front of the judge council. No pitch decks.</p>
+              </div>
+            </div>
+
+            <div class="timeline-node" data-reveal="slide-left">
+              <div class="node-marker">
+                <span class="node-dot"></span>
+                <span class="node-time">17:45 IST</span>
+              </div>
+              <div class="node-content">
+                <span class="node-phase">PHASE 05</span>
+                <h4 class="node-title">Grant Allocations & Closing Assembly</h4>
+                <p class="node-desc">Awards and grants announced. Top teams receive direct acceleration support and fast-tracked founder introductions.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Technical Divider -->
+    <div class="tech-divider-wrap">
+      <div class="tech-divider" data-divider="true"></div>
+    </div>
+
+    <!-- ============================================================
+         4. TEAM & ARCHITECTS
+         ============================================================ -->
+    <section id="team" class="team-section section-padding">
+      <div class="container">
+        
+        <div class="section-meta-row" data-reveal="fade-up">
+          <span class="section-tag">// 03 CORE TEAM & COUNCIL</span>
+          <span class="section-coord">SYSTEM ARCHITECTS</span>
+        </div>
+
+        <div class="section-header-compact" data-reveal="mask">
+          <h2 class="section-title">THE CORE TEAM & COUNCIL</h2>
+          <p class="section-subtitle">Builders, engineers, and researchers steering the Kaizen Sprint ecosystem.</p>
+        </div>
+
+        <div class="team-grid">
+          
+          <div class="team-card" data-team-dir="left">
+            <div class="team-avatar-frame">
+              <div class="avatar-placeholder">
+                <span class="avatar-initials">VK</span>
+                <div class="avatar-scan-line"></div>
+              </div>
+              <span class="team-badge">DISTRIBUTED SYSTEMS</span>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">Vikramaditya Rao</h3>
+              <span class="team-role">VP of Infrastructure // Ex-Kernel Lead</span>
+              <p class="team-bio">Architect of high-throughput memory storage engines handling over 40M requests/second.</p>
+              <div class="team-links">
+                <span class="team-link">github.com/vrao-sys</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-card" data-team-dir="up-1">
+            <div class="team-avatar-frame">
+              <div class="avatar-placeholder">
+                <span class="avatar-initials">AR</span>
+                <div class="avatar-scan-line"></div>
+              </div>
+              <span class="team-badge">AI RESEARCH</span>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">Dr. Ananya Ray</h3>
+              <span class="team-role">Principal Scientist // Neuro-Symbolic Lab</span>
+              <p class="team-bio">Specializing in sparse inference quantization and memory-augmented autonomous reasoning agents.</p>
+              <div class="team-links">
+                <span class="team-link">scholar.google/ray</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-card" data-team-dir="right">
+            <div class="team-avatar-frame">
+              <div class="avatar-placeholder">
+                <span class="avatar-initials">SM</span>
+                <div class="avatar-scan-line"></div>
+              </div>
+              <span class="team-badge">GREEN TECH & CLIMATE</span>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">Siddharth Mehta</h3>
+              <span class="team-role">Lead Architect // Sustainable Compute</span>
+              <p class="team-bio">Pioneering edge IoT sensor telemetry for micro-grid optimization and carbon verification.</p>
+              <div class="team-links">
+                <span class="team-link">github.com/smehta-eco</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-card" data-team-dir="up-2">
+            <div class="team-avatar-frame">
+              <div class="avatar-placeholder">
+                <span class="avatar-initials">TN</span>
+                <div class="avatar-scan-line"></div>
+              </div>
+              <span class="team-badge">COMMUNITY & VENTURE</span>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">Tarun Nanduri</h3>
+              <span class="team-role">General Partner // Frontier Fund</span>
+              <p class="team-bio">Backed 14 deep-tech spinouts from early hackathon prototypes to global series B expansions.</p>
+              <div class="team-links">
+                <span class="team-link">frontierfund.vc</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Technical Divider -->
+    <div class="tech-divider-wrap">
+      <div class="tech-divider" data-divider="true"></div>
+    </div>
+
+    <!-- ============================================================
+         5. PARTNERS & ECOSYSTEM
+         ============================================================ -->
+    <section id="sponsors" class="sponsors-section section-padding">
+      <div class="container">
+        
+        <div class="section-meta-row" data-reveal="fade-up">
+          <span class="section-tag">// 04 ECOSYSTEM PARTNERS</span>
+          <span class="section-coord">INFRASTRUCTURE & COMPUTING</span>
+        </div>
+
+        <div class="section-header-compact" data-reveal="mask">
+          <h2 class="section-title">POWERED BY INDUSTRY LEADERS</h2>
+          <p class="section-subtitle">Supplying builders with high-performance APIs, development credits, and direct engineer escalations.</p>
+        </div>
+
+        <div class="sponsors-group">
+          <div class="tier-label">// TIER ALPHA: COMPUTE & FOUNDATIONAL LABS</div>
+          <div class="sponsors-grid alpha-grid" data-reveal="stagger">
+            <div class="sponsor-card">
+              <div class="sponsor-logo-text">NVIDIA INCEPTION</div>
+              <span class="sponsor-grant">COMPUTE & ACCELERATOR ACCESS</span>
+            </div>
+            <div class="sponsor-card">
+              <div class="sponsor-logo-text">ANTHROPIC</div>
+              <span class="sponsor-grant">CLAUDE API INFRASTRUCTURE</span>
+            </div>
+            <div class="sponsor-card">
+              <div class="sponsor-logo-text">GOOGLE CLOUD</div>
+              <span class="sponsor-grant">TPU & GEMINI ECOSYSTEM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sponsors-group mt-8">
+          <div class="tier-label">// TIER BETA: HIGH-VELOCITY PLATFORMS</div>
+          <div class="sponsors-grid beta-grid" data-reveal="stagger">
+            <div class="sponsor-card">
+              <div class="sponsor-logo-text">VERCEL</div>
+              <span class="sponsor-grant">EDGE DEPLOYMENTS</span>
+            </div>
+            <div class="sponsor-card">
+              <div class="sponsor-logo-text">SUPABASE</div>
+              <span class="sponsor-grant">REALTIME POSTGRES</span>
+            </div>
+            <div class="sponsor-card">
+              <div class="sponsor-logo-text">GITHUB</div>
+              <span class="sponsor-grant">DEV TOOLING & COPILOT</span>
+            </div>
+            <div class="sponsor-card">
+              <div class="sponsor-logo-text">CLOUDFLARE</div>
+              <span class="sponsor-grant">GLOBAL WORKERS & STORAGE</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Technical Divider -->
+    <div class="tech-divider-wrap">
+      <div class="tech-divider" data-divider="true"></div>
+    </div>
+
+    <!-- ============================================================
+         6. ARCHIVE & FAQ
+         ============================================================ -->
+    <section id="archive" class="faq-section section-padding">
+      <div class="container">
+        
+        <div class="section-meta-row" data-reveal="fade-up">
+          <span class="section-tag">// 05 ARCHIVE & FREQUENTLY ASKED QUESTIONS</span>
+          <span class="section-coord">SPECIFICATIONS</span>
+        </div>
+
+        <div class="section-header-compact" data-reveal="mask">
+          <h2 class="section-title">SYSTEM SPECIFICATIONS & CLARIFICATIONS</h2>
+          <p class="section-subtitle">Key guidelines on application screening, hardware support, and team formats.</p>
+        </div>
+
+        <div class="faq-accordion" id="faq-accordion">
+          
+          <div class="faq-item" data-reveal="fade-up">
+            <button class="faq-trigger" aria-expanded="false">
+              <span class="faq-q-num">Q01</span>
+              <span class="faq-q-text">What is the selection criteria for GREENTECH Ideathon?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <div class="faq-answer">
+                We review technical problem-solving ability, past prototypes, and clarity of thought regarding UN Sustainable Development Goals. No previous hackathon victory required — beginners with genuine ambition and systems curiosity are warmly encouraged.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-reveal="fade-up">
+            <button class="faq-trigger" aria-expanded="false">
+              <span class="faq-q-num">Q02</span>
+              <span class="faq-q-text">What is the team size limit?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <div class="faq-answer">
+                Teams can consist of 1 to 4 individuals. You can apply as a pre-formed team or apply solo and connect with other builders during the on-site check-in mixer.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-reveal="fade-up">
+            <button class="faq-trigger" aria-expanded="false">
+              <span class="faq-q-num">Q03</span>
+              <span class="faq-q-text">What should we bring to the event?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <div class="faq-answer">
+                Bring your laptop, chargers, any hardware/microcontrollers (ESP32, Raspberry Pi, sensors) you wish to experiment with, and a valid photo ID. Fast Wi-Fi, power extensions, and refreshments are fully provided.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-reveal="fade-up">
+            <button class="faq-trigger" aria-expanded="false">
+              <span class="faq-q-num">Q04</span>
+              <span class="faq-q-text">Who owns the intellectual property created?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <div class="faq-answer">
+                You and your team retain 100% ownership of your IP. KAIZEN HACKS and partners take zero equity.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Technical Divider -->
+    <div class="tech-divider-wrap">
+      <div class="tech-divider" data-divider="true"></div>
+    </div>
+
+    <!-- ============================================================
+         7. FINAL CALL TO ACTION
+         ============================================================ -->
+    <section id="apply" class="cta-section section-padding">
+      <div class="container">
+        
+        <div class="cta-box" data-reveal="scale">
+          <div class="cta-glow"></div>
+          
+          <div class="cta-inner">
+            <span class="cta-protocol-tag">// SPRINT 2026 ACCESS GATEWAY</span>
+            <h2 class="cta-headline">
+              READY TO BUILD<br>
+              <span class="emerald-glow">SOLUTIONS THAT MATTER?</span>
+            </h2>
+            <p class="cta-lead">
+              Seats are strictly capped at 50 builders for GREENTECH to maintain deep mentorship and an intimate, high-signal room.
+            </p>
+            
+            <div class="cta-buttons">
+              <button class="btn btn-claim-spot btn-xl" id="final-apply-btn">
+                <span>CLAIM YOUR SPOT NOW →</span>
+              </button>
+              <button class="btn btn-secondary btn-xl" id="terminal-preview-btn">
+                <span class="btn-icon">⌘</span>
+                <span>CLI INGESTION: <code>curl kaizen.dev | bash</code></span>
+              </button>
+            </div>
+
+            <div class="cta-security-notes">
+              <span>● ROLLING CONFIRMATIONS</span>
+              <span>● ZERO APPLICATION FEES</span>
+              <span>● FULL ON-SITE SUPPORT</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       GLOBAL FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      
+      <div class="footer-top">
+        <div class="footer-brand-col">
+          <div class="footer-logo">
+            <span class="logo-kanji">改善</span>
+            <span class="logo-name">KAIZEN HACKS</span>
+          </div>
+          <p class="footer-mission">
+            The sanctuary for passionate builders turning ambitious ideas into working software and hardware solutions.
+          </p>
+          <div class="footer-system-status">
+            <span class="status-live-beacon"></span>
+            <span class="status-live-txt" id="footer-uptime">SYS_OK // NODE_DELHI // ONLINE</span>
+          </div>
+        </div>
+
+        <div class="footer-links-grid">
+          <div class="footer-col">
+            <h4 class="footer-col-title">// SPRINT</h4>
+            <ul class="footer-links">
+              <li><a href="#hero">Genesis</a></li>
+              <li><a href="#events">Greentech Ideathon</a></li>
+              <li><a href="#timeline">Chronology</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">// COMMUNITY</h4>
+            <ul class="footer-links">
+              <li><a href="#team">Team</a></li>
+              <li><a href="#sponsors">Partners</a></li>
+              <li><a href="#archive">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">// NETWORK</h4>
+            <ul class="footer-links">
+              <li><a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+              <li><a href="https://x.com" target="_blank" rel="noopener noreferrer">X (Twitter) ↗</a></li>
+              <li><a href="https://discord.com" target="_blank" rel="noopener noreferrer">Discord Community ↗</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          © 2026 KAIZEN HACKS // SPRINT LABS. ALL RIGHTS RESERVED.
+        </div>
+        <div class="footer-telemetry">
+          <span id="footer-clock">UTC 00:00:00</span>
+          <span class="footer-sep">/</span>
+          <span>DELHI HQ</span>
+          <span class="footer-sep">/</span>
+          <span>LAT: 28.6139° N</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       APPLICATION DOSSIER MODAL
+       ============================================================ -->
+  <div id="apply-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-tag">// SPRINT APPLICATION DOSSIER</span>
+          <h3 class="modal-title" id="modal-event-heading">REGISTER FOR GREENTECH IDEATHON</h3>
+        </div>
+        <button class="modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+      
+      <form id="apply-form" class="modal-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-name" class="form-label">FULL NAME <span class="req">*</span></label>
+            <input type="text" id="form-name" class="form-input" placeholder="e.g. Maya Lin" required>
+          </div>
+          <div class="form-group">
+            <label for="form-email" class="form-label">EMAIL ADDRESS <span class="req">*</span></label>
+            <input type="email" id="form-email" class="form-input" placeholder="e.g. builder@kaizen.dev" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-github" class="form-label">GITHUB / PORTFOLIO / LINKEDIN <span class="req">*</span></label>
+            <input type="url" id="form-github" class="form-input" placeholder="https://github.com/username" required>
+          </div>
+          <div class="form-group">
+            <label for="form-track" class="form-label">PRIMARY INTEREST TRACK <span class="req">*</span></label>
+            <select id="form-track" class="form-select" required>
+              <option value="" disabled selected>Select SDG Challenge Track</option>
+              <option value="energy">Clean Energy & Sustainable Power (SDG 07)</option>
+              <option value="cities">Smart Mobility & Sustainable Cities (SDG 11)</option>
+              <option value="waste">Circular Waste & Material Tracking (SDG 12)</option>
+              <option value="climate">Climate Action & Environmental Intelligence (SDG 13)</option>
+              <option value="general">General Innovation & Open Track</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form-proof" class="form-label">WHAT WOULD YOU LIKE TO BUILD? <span class="req">*</span></label>
+          <textarea id="form-proof" class="form-textarea" rows="3" placeholder="Tell us briefly about an SDG challenge you want to tackle, or an app/game/hardware project you'd love to build." required></textarea>
+        </div>
+
+        <div class="form-footer">
+          <button type="submit" class="btn btn-claim-spot btn-block" id="submit-dossier-btn">
+            <span>SUBMIT REGISTRATION DOSSIER →</span>
+          </button>
+          <div class="form-security-note">
+            Confirmations are sent on a rolling basis. 50 builder capacity.
+          </div>
+        </div>
+      </form>
+
+      <div id="modal-success-state" class="modal-success-state" style="display: none;">
+        <div class="success-icon">✓</div>
+        <h3 class="success-title">REGISTRATION TRANSMITTED</h3>
+        <p class="success-desc">
+          Your dossier has been logged into the review queue. Selected participants receive seat confirmation & event packet via email within 48 hours.
+        </p>
+        <button class="btn btn-secondary" id="modal-done-btn">RETURN TO DASHBOARD</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Main JavaScript Engine -->
+  <script type="module" src="/script.js"></script>
+</body>
+</html>
