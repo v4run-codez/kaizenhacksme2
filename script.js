@@ -1,5 +1,5 @@
 /**
- * KAIZEN HACKS — SPRINT // 2026
+ * KAIZENHACKS — STUDENT-LED INNOVATION
  * HIGH-PRECISION RUNTIME & INTERACTIVE ENGINE
  */
 
@@ -134,7 +134,7 @@
     let width = (matrixCanvas.width = window.innerWidth);
     let height = (matrixCanvas.height = window.innerHeight);
 
-    const chars = '改善KAIZEN0123456789SDG_NODE_DELHI_V2.6';
+    const chars = '改善KAIZEN0123456789BUILD_IMPROVE_REPEAT';
     const fontSize = 14;
     let columns = Math.floor(width / fontSize);
     let drops = Array(columns).fill(1);
@@ -183,7 +183,7 @@
     if (loaderBar) loaderBar.style.width = '100%';
 
     setTimeout(() => {
-      if (loaderStatus) loaderStatus.textContent = 'SYS_OK // NODE_DELHI ACTIVE';
+      if (loaderStatus) loaderStatus.textContent = 'SYS_OK // STUDENT-LED INITIATIVE ACTIVE';
     }, 300);
 
     setTimeout(() => {
@@ -342,7 +342,7 @@
     if (!applyModal) return;
     const heading = document.getElementById('modal-event-heading');
     if (heading && eventName) {
-      heading.textContent = `REGISTER FOR ${eventName.toUpperCase()}`;
+      heading.textContent = `EXPRESS INTEREST IN ${eventName.toUpperCase()}`;
     }
     applyModal.classList.add('active');
     applyModal.setAttribute('aria-hidden', 'false');
@@ -371,7 +371,7 @@
 
     document.querySelectorAll('.apply-trigger-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const evName = btn.getAttribute('data-event') || 'GREENTECH IDEATHON';
+        const evName = btn.getAttribute('data-event') || 'KAIZENHACKS';
         openModal(evName);
       });
       btn.addEventListener('mouseenter', () => playSound('hover'));
@@ -379,7 +379,7 @@
 
     triggers.forEach(btn => {
       if (btn) {
-        btn.addEventListener('click', () => openModal('GREENTECH IDEATHON'));
+        btn.addEventListener('click', () => openModal('KAIZENHACKS'));
         btn.addEventListener('mouseenter', () => playSound('hover'));
       }
     });
@@ -405,12 +405,12 @@
         setTimeout(() => {
           if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span>SUBMIT REGISTRATION DOSSIER →</span>';
+            submitBtn.innerHTML = '<span>SEND INTEREST FORM →</span>';
           }
           if (applyForm) applyForm.style.display = 'none';
           if (modalSuccess) modalSuccess.style.display = 'block';
           playSound('success');
-          showToast('DOSSIER LOGGED // SEAT RESERVED IN REVIEW QUEUE');
+          showToast(`MESSAGE RECEIVED // WE'LL BE IN TOUCH SOON`);
         }, 500);
       });
     }
@@ -418,11 +418,11 @@
     const cliBtn = document.getElementById('terminal-preview-btn');
     if (cliBtn) {
       cliBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText('curl -s https://kaizen.dev/sprint | bash').then(() => {
-          showToast('COPIED CLI COMMAND TO CLIPBOARD');
+        navigator.clipboard.writeText('https://kaizenhacks.me').then(() => {
+          showToast('COPIED SITE LINK TO CLIPBOARD');
           playSound('click');
         }).catch(() => {
-          showToast('CLI INGESTION READY: curl kaizen.dev');
+          showToast('KAIZENHACKS // kaizenhacks.me');
         });
       });
     }

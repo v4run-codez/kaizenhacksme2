@@ -1,6 +1,6 @@
 {
-  "name": "KAIZEN HACKS",
-  "description": "Premium cinematic website for KAIZEN HACKS with rich, restrained motion design, bespoke typography, and quiet luxury engineering aesthetics.",
+  "name": "KAIZENHACKS",
+  "description": "Website for KaizenHacks, a student-led hackathon and innovation organization. Build. Improve. Repeat.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
