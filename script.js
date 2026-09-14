@@ -19,6 +19,7 @@
   const orb1 = document.getElementById('orb-1');
   const orb2 = document.getElementById('orb-2');
   const matrixCanvas = document.getElementById('matrix-canvas');
+  const heroSection = document.getElementById('hero');
   const timelineProgress = document.getElementById('timeline-progress');
   const timelineSection = document.getElementById('timeline');
   const footerClock = document.getElementById('footer-clock');
@@ -131,43 +132,88 @@
     const ctx = matrixCanvas.getContext('2d');
     if (!ctx) return;
 
-    let width = (matrixCanvas.width = window.innerWidth);
-    let height = (matrixCanvas.height = window.innerHeight);
-
+    const scale = 0.5;
+    const fontSize = Math.round(14 * scale);
     const chars = '改善KAIZEN0123456789BUILD_IMPROVE_REPEAT';
-    const fontSize = 14;
-    let columns = Math.floor(width / fontSize);
-    let drops = Array(columns).fill(1);
+    let columns = 0;
+    let drops = [];
+    let intervalId = null;
+    let heroVisible = true;
+
+    function resize() {
+      const w = Math.max(1, Math.floor(window.innerWidth * scale));
+      const h = Math.max(1, Math.floor(window.innerHeight * scale));
+      matrixCanvas.width = w;
+      matrixCanvas.height = h;
+      columns = Math.max(1, Math.floor(w / fontSize));
+      drops = Array(columns).fill(1);
+    }
+
+    function isLightMode() {
+      return document.documentElement.getAttribute('data-theme') === 'light';
+    }
 
     function draw() {
-      if (document.documentElement.getAttribute('data-theme') === 'light') {
+      if (isLightMode()) {
+        ctx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
         return;
       }
-      ctx.fillStyle = 'rgba(6, 9, 8, 0.08)';
-      ctx.fillRect(0, 0, width, height);
+      const w = matrixCanvas.width;
+      const h = matrixCanvas.height;
+      ctx.fillStyle = 'rgba(6, 9, 8, 0.1)';
+      ctx.fillRect(0, 0, w, h);
 
-      ctx.fillStyle = 'rgba(40, 122, 91, 0.12)';
+      ctx.fillStyle = 'rgba(40, 122, 91, 0.16)';
       ctx.font = `${fontSize}px JetBrains Mono`;
 
       for (let i = 0; i < drops.length; i++) {
         const text = chars.charAt(Math.floor(Math.random() * chars.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        if (drops[i] * fontSize > height && Math.random() > 0.98) {
+        if (drops[i] * fontSize > h && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
     }
 
-    setInterval(draw, 60);
+    function stop() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    }
 
-    window.addEventListener('resize', () => {
-      width = matrixCanvas.width = window.innerWidth;
-      height = matrixCanvas.height = window.innerHeight;
-      columns = Math.floor(width / fontSize);
-      drops = Array(columns).fill(1);
+    function start() {
+      if (intervalId || document.hidden || !heroVisible || prefersReducedMotion) return;
+      intervalId = window.setInterval(draw, 100);
+    }
+
+    resize();
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stop();
+      } else {
+        start();
+      }
     });
+
+    window.addEventListener('resize', resize, { passive: true });
+
+    if (heroSection && 'IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        heroVisible = entries.some((e) => e.isIntersecting);
+        if (heroVisible) {
+          start();
+        } else {
+          stop();
+        }
+      }, { threshold: 0 });
+      obs.observe(heroSection);
+    }
+
+    start();
   }
 
   /* ============================================================
@@ -194,49 +240,69 @@
   }
 
   /* ============================================================
-     4. SCROLL PROGRESS & STICKY NAV
+     4. SCROLL PROGRESS & STICKY NAV (rAF-THROTTLED, NO REFLOW)
      ============================================================ */
-  function handleScroll() {
-    const scrollY = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  let pageScrollHeight = 0;
+  let scrollTicking = false;
+  let timelineInView = false;
 
-    if (scrollProgress && docHeight > 0) {
-      const pct = Math.min(100, Math.max(0, (scrollY / docHeight) * 100));
-      scrollProgress.style.width = pct + '%';
+  function measurePage() {
+    pageScrollHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  }
+
+  function updateScrollUi() {
+    scrollTicking = false;
+    const scrollY = window.scrollY || 0;
+
+    if (scrollProgress) {
+      const pct = Math.min(1, Math.max(0, scrollY / pageScrollHeight));
+      scrollProgress.style.transform = `scaleX(${pct})`;
     }
 
     if (mainNav) {
-      if (scrollY > 25) {
-        mainNav.classList.add('scrolled');
-      } else {
-        mainNav.classList.remove('scrolled');
+      const shouldScroll = scrollY > 25;
+      if (shouldScroll !== mainNav.classList.contains('scrolled')) {
+        mainNav.classList.toggle('scrolled', shouldScroll);
       }
     }
 
-    if (bgGrid && !prefersReducedMotion) {
-      bgGrid.style.transform = `translate3d(0, ${scrollY * 0.08}px, 0)`;
+    if (!prefersReducedMotion) {
+      if (bgGrid) bgGrid.style.transform = `translate3d(0, ${scrollY * 0.08}px, 0)`;
+      if (orb1) orb1.style.transform = `translate3d(0, ${scrollY * -0.05}px, 0)`;
+      if (orb2) orb2.style.transform = `translate3d(0, ${scrollY * 0.04}px, 0)`;
     }
 
-    if (orb1 && !prefersReducedMotion) {
-      orb1.style.transform = `translate3d(0, ${scrollY * -0.05}px, 0)`;
-    }
-    if (orb2 && !prefersReducedMotion) {
-      orb2.style.transform = `translate3d(0, ${scrollY * 0.04}px, 0)`;
-    }
-
-    if (timelineSection && timelineProgress) {
+    if (timelineInView && timelineSection && timelineProgress) {
       const rect = timelineSection.getBoundingClientRect();
       const windowH = window.innerHeight;
-      if (rect.top <= windowH && rect.bottom >= 0) {
-        const total = rect.height;
-        const visible = windowH - rect.top;
-        const pct = Math.min(100, Math.max(0, (visible / total) * 100));
-        timelineProgress.style.height = pct + '%';
+      if (rect.top <= windowH && rect.bottom >= 0 && rect.height > 0) {
+        const visible = windowH - Math.max(rect.top, 0);
+        const pct = Math.min(1, Math.max(0, visible / rect.height));
+        timelineProgress.style.transform = `scaleY(${pct})`;
       }
     }
   }
 
-  window.addEventListener('scroll', handleScroll, { passive: true });
+  function onScroll() {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      requestAnimationFrame(updateScrollUi);
+    }
+  }
+
+  function initTimelineWatcher() {
+    if (!timelineSection || !('IntersectionObserver' in window)) return;
+    const obs = new IntersectionObserver((entries) => {
+      timelineInView = entries.some((e) => e.isIntersecting);
+      if (timelineInView) updateScrollUi();
+    }, { rootMargin: '0px' });
+    obs.observe(timelineSection);
+  }
+
+  measurePage();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', measurePage, { passive: true });
+  window.addEventListener('load', measurePage, { passive: true });
 
   /* ============================================================
      5. HUD CARD INTERACTIVE TAB CONTROLLER
@@ -545,6 +611,7 @@
     initMobileDrawer();
     initFaq();
     initObserver();
+    initTimelineWatcher();
   });
 
 })();

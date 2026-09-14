@@ -158,11 +158,13 @@ button {
   top: 0;
   left: 0;
   height: 2px;
-  width: 0%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
   background: var(--accent);
   z-index: 1000;
   pointer-events: none;
-  transition: width 0.08s linear;
+  will-change: transform;
 }
 
 /* 4. QUIET MARGIN TELEMETRY METADATA */
@@ -236,6 +238,7 @@ button {
   background-position: center center;
   opacity: 0.95;
   transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 [data-theme="light"] .bg-grid {
@@ -248,6 +251,8 @@ button {
 }
 
 .matrix-canvas {
+  width: 100%;
+  height: 100%;
   opacity: 0.03;
   mix-blend-mode: screen;
 }
@@ -256,11 +261,10 @@ button {
   display: none;
 }
 
-/* Sleek Soft Ambient Lighting Orbs */
+/* Sleek Soft Ambient Lighting Orbs (radial-gradient glow, no filter blur) */
 .bg-ambient-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(140px);
   opacity: 0.04;
   pointer-events: none;
 }
@@ -268,17 +272,21 @@ button {
 .orb-1 {
   width: 700px;
   height: 700px;
-  background: var(--accent);
+  background: radial-gradient(circle, rgba(40, 122, 91, 0.9) 0%, rgba(40, 122, 91, 0.35) 25%, rgba(40, 122, 91, 0) 62%);
   top: 5%;
   right: -5%;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .orb-2 {
   width: 600px;
   height: 600px;
-  background: var(--accent-dark);
+  background: radial-gradient(circle, rgba(27, 87, 64, 0.9) 0%, rgba(27, 87, 64, 0.35) 25%, rgba(27, 87, 64, 0) 62%);
   bottom: 5%;
   left: -5%;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 [data-theme="light"] .bg-ambient-orb {
@@ -374,15 +382,15 @@ button {
   width: 100%;
   height: var(--nav-height);
   z-index: 500;
-  background-color: rgba(8, 9, 10, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: rgba(8, 9, 10, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border-subtle);
   transition: background-color 0.25s var(--ease-smooth), border-color 0.25s var(--ease-smooth);
 }
 
 [data-theme="light"] .nav-container {
-  background-color: rgba(229, 236, 231, 0.9);
+  background-color: rgba(229, 236, 231, 0.94);
 }
 
 .nav-container.scrolled {
@@ -520,7 +528,7 @@ button {
   color: var(--text-muted);
   cursor: pointer;
   box-shadow: var(--shadow-neumorphic-sm);
-  transition: all 0.2s var(--ease-smooth);
+  transition: transform 0.2s var(--ease-smooth), color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .icon-tool-btn:hover {
@@ -905,10 +913,10 @@ button {
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-lg);
   padding: clamp(28px, 3.5vw, 40px);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   box-shadow: var(--shadow-neumorphic-outset);
-  transition: border-color 0.25s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth), transform 0.25s var(--ease-out);
+  transition: border-color 0.25s var(--ease-smooth), transform 0.25s var(--ease-out);
   width: 100%;
   max-width: 620px;
 }
@@ -1058,7 +1066,7 @@ button {
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-neumorphic-sm);
   position: relative;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .hud-tab-btn:hover {
@@ -1271,7 +1279,7 @@ button {
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--shadow-neumorphic-outset);
-  transition: border-color 0.25s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth), transform 0.25s var(--ease-out);
+  transition: border-color 0.25s var(--ease-smooth), transform 0.25s var(--ease-out);
   width: 100%;
 }
 
@@ -1398,7 +1406,7 @@ button {
   border-radius: var(--radius-md);
   border: 1px solid var(--accent);
   box-shadow: var(--shadow-neumorphic-sm);
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .btn-primary:hover {
@@ -1433,7 +1441,7 @@ button {
   border-radius: var(--radius-md);
   border: 1px solid var(--border-medium);
   box-shadow: var(--shadow-neumorphic-sm);
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .btn-secondary:hover {
@@ -1469,10 +1477,11 @@ button {
 }
 
 .timeline-line-progress {
-  width: 100%;
-  height: 0%;
+  height: 100%;
+  transform: scaleY(0);
+  transform-origin: top center;
   background: var(--accent);
-  transition: height 0.1s linear;
+  will-change: transform;
 }
 
 .timeline-nodes {
@@ -1522,7 +1531,7 @@ button {
   border-radius: var(--radius-md);
   padding: 24px 32px;
   box-shadow: var(--shadow-neumorphic-sm);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.25s ease, transform 0.25s ease;
   width: 100%;
 }
 
@@ -1595,7 +1604,7 @@ button {
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--shadow-neumorphic-outset);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.25s ease, transform 0.25s ease;
   width: 100%;
 }
 
@@ -1738,7 +1747,7 @@ button {
   flex-direction: column;
   gap: 8px;
   box-shadow: var(--shadow-neumorphic-sm);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.25s ease, transform 0.25s ease;
   width: 100%;
 }
 
@@ -2079,9 +2088,9 @@ button {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(8, 9, 10, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(8, 9, 10, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -2269,8 +2278,7 @@ button {
 .mobile-drawer {
   position: fixed;
   inset: 0;
-  background: rgba(8, 9, 10, 0.96);
-  backdrop-filter: blur(20px);
+  background: rgba(8, 9, 10, 0.97);
   z-index: 900;
   opacity: 0;
   visibility: hidden;
